@@ -65,12 +65,13 @@ export default function AdminOrdersPage() {
     if (error) { toast.error(error.message); return; }
 
     // Add timeline entry
-    // @ts-ignore Supabase types issue
-    await supabase.from('order_timeline').insert({
+    const timelineEntry = {
       order_id: orderId,
       status: newStatus,
       note: `Status updated to: ${STATUS_LABELS[newStatus] ?? newStatus}`,
-    });
+    } as any;
+
+    await supabase.from('order_timeline').insert(timelineEntry);
 
     setOrders((prev) => prev.map((o) => o.id === orderId ? { ...o, fulfillment_status: newStatus as Order['fulfillment_status'] } : o));
     toast.success('Order status updated!');
