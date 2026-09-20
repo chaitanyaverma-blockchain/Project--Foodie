@@ -69,7 +69,7 @@ const ProgressBar = ({ step, total }: { step: number; total: number }) => {
 // ==========================================
 // MAIN PAGE COMPONENT
 // ==========================================
-export default function AddRecipeWizard() {
+function AddRecipeWizardContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user } = useAuth();
@@ -634,3 +634,11 @@ const Step5 = ({ tags, setTags, spiceLevel, setSpiceLevel, mealType, setMealType
     </motion.div>
   );
 };
+
+export default function AddRecipeWizard() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen pt-28 flex items-center justify-center">Loading...</div>}>
+      <AddRecipeWizardContent />
+    </React.Suspense>
+  );
+}

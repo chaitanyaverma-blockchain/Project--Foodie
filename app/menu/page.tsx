@@ -13,7 +13,7 @@ import { FoodCardSkeleton } from '@/components/ui/Skeleton';
 import { debounce } from '@/lib/utils';
 import { useFoodDrawer } from '@/context/FoodDrawerContext';
 
-export default function MenuPage() {
+function MenuPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [items, setItems] = useState<FoodItem[]>([]);
@@ -321,5 +321,13 @@ export default function MenuPage() {
         />
       )}
     </>
+  );
+}
+
+export default function MenuPage() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen pt-28 flex items-center justify-center">Loading...</div>}>
+      <MenuPageContent />
+    </React.Suspense>
   );
 }

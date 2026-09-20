@@ -10,7 +10,7 @@ import { FloatingInput } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
 
-export default function LoginPage() {
+function LoginForm() {
   const { signIn, signInWithGoogle } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -163,5 +163,13 @@ export default function LoginPage() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen pt-28 flex items-center justify-center">Loading...</div>}>
+      <LoginForm />
+    </React.Suspense>
   );
 }

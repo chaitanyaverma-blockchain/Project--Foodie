@@ -10,7 +10,7 @@ import { FloatingInput } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
 
-export default function SignupPage() {
+function SignupForm() {
   const { signUp, signInWithGoogle } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -39,7 +39,7 @@ export default function SignupPage() {
       setLoading(false);
       return;
     }
-    toast.success('Account created! Check your email to confirm.', { duration: 5000 });
+    toast.success('Account created! Welcome to Foodie! 🎉');
     router.push(next);
   };
 
@@ -60,6 +60,7 @@ export default function SignupPage() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
+        {/* Logo */}
         <div className="flex flex-col items-center mb-8">
           <Link href="/" className="flex items-center gap-3 mb-4">
             <div className="w-12 h-12 bg-[#FF6B00] rounded-2xl flex items-center justify-center shadow-orange">
@@ -67,12 +68,13 @@ export default function SignupPage() {
             </div>
             <span className="font-serif font-bold text-3xl text-[#1A1A1A]">Foodie</span>
           </Link>
-          <h1 className="font-serif font-bold text-2xl text-[#1A1A1A]">Create your account</h1>
-          <p className="text-[#6B6B6B] text-sm mt-1">Join thousands of food lovers</p>
+          <h1 className="font-serif font-bold text-2xl text-[#1A1A1A]">Create an account</h1>
+          <p className="text-[#6B6B6B] text-sm mt-1">Join thousands of food lovers today</p>
         </div>
 
+        {/* Card */}
         <div className="bg-white rounded-2xl shadow-card p-8">
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <FloatingInput
               id="signup-name"
               label="Full Name"
@@ -93,7 +95,7 @@ export default function SignupPage() {
             />
             <FloatingInput
               id="signup-password"
-              label="Password (min 6 characters)"
+              label="Password (min. 6 characters)"
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -110,29 +112,28 @@ export default function SignupPage() {
               autoComplete="new-password"
             />
 
-            <Button id="signup-submit-btn" type="submit" fullWidth size="lg" loading={loading} disabled={googleLoading}>
+            <Button type="submit" fullWidth size="lg" loading={loading} className="mt-2">
               Create Account
             </Button>
           </form>
 
           <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-200"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500 font-medium">Or continue with</span>
-              </div>
+            <div className="relative flex items-center justify-center mb-6">
+              <div className="border-t border-gray-200 w-full" />
+              <span className="bg-white px-4 text-xs text-gray-400 uppercase font-semibold absolute">
+                or continue with
+              </span>
             </div>
 
-            <div className="mt-6">
+            <div className="grid grid-cols-1 gap-3">
               <button
+                type="button"
                 onClick={handleGoogleSignIn}
-                disabled={loading || googleLoading}
-                className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-200 rounded-xl bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF6B00] disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={googleLoading}
+                className="flex items-center justify-center gap-3 py-3 px-4 border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors disabled:opacity-50 text-sm font-medium"
               >
                 {googleLoading ? (
-                  <div className="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-5 h-5 border-2 border-[#FF6B00] border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
                     <path
@@ -175,5 +176,13 @@ export default function SignupPage() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen pt-28 flex items-center justify-center">Loading...</div>}>
+      <SignupForm />
+    </React.Suspense>
   );
 }
