@@ -1,0 +1,548 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   CSS VARIABLES — DESIGN TOKENS
+   ============================================================ */
+:root {
+  --color-brand-orange: #FF6B00;
+  --color-brand-orange-light: #FF7A1A;
+  --color-brand-orange-dark: #E56000;
+
+  --color-bg-primary: #FAFAFA;
+  --color-bg-secondary: #FFFDF9;
+  --color-bg-card: #FFFFFF;
+  --color-bg-input: #FFFFFF;
+  --color-bg-inverse: #1A1A1A;
+
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #6B6B6B;
+  --color-text-muted: #9CA3AF;
+  --color-text-inverse: #FFFFFF;
+
+  --color-veg: #16A34A;
+  --color-non-veg: #DC2626;
+  --color-egg: #D97706;
+
+  --color-border: #E5E7EB;
+  --color-border-light: #F3F4F6;
+  
+  --shadow-orange: 0 4px 20px rgba(255,107,0, 0.3);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --max-width: 1440px;
+  --content-padding: clamp(16px, 4vw, 80px);
+
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 8px 40px rgba(255,107,0, 0.12);
+}
+
+/* ============================================================
+   BASE RESET
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.font-serif { font-family: var(--font-serif); }
+.font-sans { font-family: var(--font-sans); }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+/* ============================================================
+   SHIMMER LOADING
+   ============================================================ */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+
+/* ============================================================
+   FOCUS STYLES
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--color-brand-orange);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   CONTAINER
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-left: var(--content-padding);
+  padding-right: var(--content-padding);
+}
+
+/* ============================================================
+   BADGE VARIANTS
+   ============================================================ */
+.badge-veg {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  background: #DCFCE7;
+  color: var(--color-veg);
+  border: 1.5px solid var(--color-veg);
+}
+
+.badge-non-veg {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  background: #FEE2E2;
+  color: var(--color-non-veg);
+  border: 1.5px solid var(--color-non-veg);
+}
+
+.badge-egg {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  background: #FEF3C7;
+  color: var(--color-egg);
+  border: 1.5px solid var(--color-egg);
+}
+
+/* ============================================================
+   FLOATING LABEL INPUT
+   ============================================================ */
+.floating-input-wrapper {
+  position: relative;
+}
+
+.floating-input {
+  width: 100%;
+  padding: 20px 16px 8px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-family: var(--font-sans);
+  background: var(--color-bg-input);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+  color: var(--color-text-primary);
+}
+
+.floating-input:focus {
+  border-color: var(--color-brand-orange);
+  box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.25);
+}
+
+.floating-label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  transition: all var(--transition-fast);
+}
+
+.floating-label.has-icon {
+  left: 44px;
+}
+
+.floating-input:focus ~ .floating-label,
+.floating-input:not(:placeholder-shown) ~ .floating-label {
+  top: 10px;
+  font-size: 11px;
+  color: var(--color-brand-orange);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.floating-input:focus ~ .floating-label.has-icon,
+.floating-input:not(:placeholder-shown) ~ .floating-label.has-icon {
+  left: 16px;
+}
+
+/* ============================================================
+   CART BADGE PULSE
+   ============================================================ */
+@keyframes cartPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.cart-badge {
+  animation: cartPulse 0.4s ease;
+}
+
+/* ============================================================
+   HERO GRADIENT OVERLAY
+   ============================================================ */
+.hero-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(255,107,0, 0.92) 0%,
+    rgba(194, 65, 12, 0.85) 50%,
+    rgba(26, 26, 26, 0.75) 100%
+  );
+}
+
+/* ============================================================
+   GLASS CARD
+   ============================================================ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================================
+   NO SCROLLBAR (for horizontal scroll containers)
+   ============================================================ */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ============================================================
+   STAR RATING
+   ============================================================ */
+.star-filled { color: #F59E0B; }
+.star-empty { color: #E5E7EB; }
+
+/* ============================================================
+   PAGE TRANSITIONS
+   ============================================================ */
+.page-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* ============================================================
+   ADMIN SIDEBAR
+   ============================================================ */
+.admin-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #6B7280;
+  transition: all 200ms ease;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+}
+
+.admin-sidebar-item:hover {
+  background: #FFF4EE;
+  color: var(--color-brand-orange);
+}
+
+.admin-sidebar-item.active {
+  background: linear-gradient(135deg, #FF6B00 0%, #FF7A1A 100%);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(255,107,0, 0.3);
+}
+
+/* Admin card shadow */
+.shadow-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Admin number font */
+.font-admin-num {
+  font-family: 'Inter', sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   ORDER TIMELINE
+   ============================================================ */
+.timeline-connector {
+  width: 2px;
+  background: linear-gradient(to bottom, #FF6B00, #E5E7EB);
+  min-height: 40px;
+  margin-left: 11px;
+}
+
+/* ============================================================
+   RESPONSIVE UTILITIES
+   ============================================================ */
+@media (max-width: 768px) {
+  :root {
+    --content-padding: 16px;
+  }
+}
+
+/* ============================================================
+   DARK MODE — CSS VARIABLE OVERRIDES
+   ============================================================ */
+.dark {
+  color-scheme: dark;
+  --color-bg-primary: #0F1115;
+  --color-bg-secondary: #171A21;
+  --color-bg-card: #1E222B;
+  --color-bg-input: #18181B;
+  --color-bg-inverse: #FAFAFA;
+
+  --color-text-primary: #F8F9FA;
+  --color-text-secondary: #B0B7C3;
+  --color-text-muted: #7E8795;
+  --color-text-inverse: #1A1A1A;
+
+  --color-border: #353B46;
+  --color-border-light: #2A2F38;
+
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 8px 40px rgba(255, 107, 0, 0.15);
+}
+
+.dark ::-webkit-scrollbar-thumb { background: #3F3F46; }
+.dark ::-webkit-scrollbar-thumb:hover { background: #52525B; }
+
+/* ============================================================
+   DARK MODE — GLOBAL INPUT / TEXTAREA / SELECT TEXT VISIBILITY & CONTRAST
+   ============================================================ */
+.dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not(.sr-only),
+.dark textarea,
+.dark select {
+  color: #FFFFFF;
+}
+
+.dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not(.sr-only)::placeholder,
+.dark textarea::placeholder {
+  color: #9CA3AF !important;
+  opacity: 1;
+}
+
+/* Ensure option elements inside selects are readable in dark mode */
+.dark select option {
+  background-color: #1E222B;
+  color: #F3F4F6;
+}
+
+/* ============================================================
+   HEART POP ANIMATION
+   ============================================================ */
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.4); }
+  60% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.heart-pop {
+  animation: heartPop 0.4s cubic-bezier(0.17, 0.67, 0.35, 1.5);
+}
+
+/* ============================================================
+   BUTTON RIPPLE EFFECT
+   ============================================================ */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+
+.btn-ripple:active::after {
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+}
+
+/* ============================================================
+   DRAWER STYLES
+   ============================================================ */
+.drawer-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.drawer-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.drawer-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.drawer-scroll::-webkit-scrollbar-thumb {
+  background: #E5E7EB;
+  border-radius: 2px;
+}
+.dark .drawer-scroll::-webkit-scrollbar-thumb {
+  background: #3F3F46;
+}
+
+/* ============================================================
+   NUTRITION CARD
+   ============================================================ */
+.nutrition-card {
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFFFFF 100%);
+  border: 1px solid #FED7AA;
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.nutrition-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,107,0, 0.1);
+}
+.dark .nutrition-card {
+  background: linear-gradient(135deg, #1C1917 0%, #1E1E1E 100%);
+  border-color: #44403C;
+}
+
+/* ============================================================
+   INGREDIENT CARD
+   ============================================================ */
+.ingredient-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #FAFAFA;
+  border: 1px solid #F3F4F6;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+.ingredient-card:hover {
+  background: #FFF7ED;
+  border-color: #FDBA74;
+  transform: translateY(-2px);
+}
+.dark .ingredient-card {
+  background: #262626;
+  border-color: #3F3F46;
+}
+.dark .ingredient-card:hover {
+  background: #1C1917;
+  border-color: #FF6B00;
+}
+
+/* ============================================================
+   FLOATING ELEMENTS
+   ============================================================ */
+.floating-bar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.08);
+}
+.dark .floating-bar {
+  background: rgba(30, 30, 30, 0.95);
+  border-color: rgba(63, 63, 70, 0.5);
+  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   SPICE LEVEL RADIO
+   ============================================================ */
+.spice-radio:checked + label {
+  background: #FF6B00;
+  color: white;
+  border-color: #FF6B00;
+}
+
