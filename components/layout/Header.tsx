@@ -205,7 +205,7 @@ export function Header() {
                     className={cn(
                       'w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm transition-colors',
                       scrolled || !isHero
-                        ? 'bg-brand-orange/10 text-brand-orange hover:bg-brand-orange/20'
+                        ? 'bg-brand-orange/10 dark:bg-brand-orange/20 text-brand-orange hover:bg-brand-orange/20'
                         : 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm border border-white/30'
                     )}
                   >
@@ -219,17 +219,17 @@ export function Header() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.95 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-0 top-12 w-52 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50"
+                        className="absolute right-0 top-12 w-52 bg-white dark:bg-[#1E1E1E] rounded-2xl shadow-2xl border border-gray-100 dark:border-[#2A2A2A] overflow-hidden z-50"
                       >
-                        <div className="px-4 py-3 border-b border-gray-50">
-                          <p className="text-sm font-semibold text-gray-900">{profile?.full_name ?? 'Welcome!'}</p>
-                          <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                        <div className="px-4 py-3 border-b border-gray-50 dark:border-[#2A2A2A]">
+                          <p className="text-sm font-semibold text-gray-900 dark:text-white">{profile?.full_name ?? 'Welcome!'}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user.email}</p>
                         </div>
                         <div className="py-1">
                           <Link
                             href="/profile"
                             onClick={() => setUserMenuOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#FF6B00] transition-colors"
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-orange-50 dark:hover:bg-[#2A2A2A] hover:text-[#FF6B00] dark:hover:text-[#FF6B00] transition-colors"
                           >
                             <User className="w-4 h-4" />
                             My Profile
@@ -237,7 +237,7 @@ export function Header() {
                           <Link
                             href="/orders"
                             onClick={() => setUserMenuOpen(false)}
-                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#FF6B00] transition-colors"
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-orange-50 dark:hover:bg-[#2A2A2A] hover:text-[#FF6B00] dark:hover:text-[#FF6B00] transition-colors"
                           >
                             <ShoppingCart className="w-4 h-4" />
                             My Orders
@@ -245,17 +245,17 @@ export function Header() {
                           {isAdmin && (
                             <a
                               href="/admin"
-                              className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#FF6B00] font-semibold hover:bg-orange-50 transition-colors"
+                              className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#FF6B00] font-semibold hover:bg-orange-50 dark:hover:bg-[#2A2A2A] transition-colors"
                             >
                               <LayoutDashboard className="w-4 h-4" />
                               Admin Panel
                             </a>
                           )}
                         </div>
-                        <div className="border-t border-gray-50 py-1">
+                        <div className="border-t border-gray-50 dark:border-[#2A2A2A] py-1">
                           <button
                             onClick={() => { signOut(); setUserMenuOpen(false); }}
-                            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
                           >
                             <LogOut className="w-4 h-4" />
                             Sign Out
@@ -271,7 +271,7 @@ export function Header() {
                   className={cn(
                     'hidden md:flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all',
                     scrolled || !isHero
-                      ? 'text-[#6B6B6B] hover:text-[#FF6B00] hover:bg-orange-50'
+                      ? 'text-[#6B6B6B] dark:text-gray-300 hover:text-[#FF6B00] hover:bg-orange-50 dark:hover:bg-[#2A2A2A]'
                       : 'text-white/80 hover:text-white hover:bg-white/10'
                   )}
                 >
@@ -283,13 +283,16 @@ export function Header() {
               {/* Mobile Hamburger */}
               <button
                 id="mobile-menu-btn"
+                aria-label="Toggle Navigation Menu"
                 className={cn(
-                  'md:hidden w-10 h-10 flex items-center justify-center rounded-xl transition-colors',
-                  scrolled || !isHero ? 'text-[#1A1A1A] hover:bg-gray-100' : 'text-white hover:bg-white/10'
+                  'md:hidden w-10 h-10 flex items-center justify-center rounded-xl transition-all',
+                  scrolled || !isHero
+                    ? 'text-[#1A1A1A] dark:text-white bg-gray-100/80 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20'
+                    : 'text-white bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30'
                 )}
                 onClick={() => setMobileOpen((p) => !p)}
               >
-                {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                {mobileOpen ? <X className="w-5 h-5 text-current" /> : <Menu className="w-5 h-5 text-current" />}
               </button>
             </div>
           </div>
@@ -303,7 +306,7 @@ export function Header() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.25 }}
-              className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
+              className="md:hidden bg-white dark:bg-[#1E1E1E] border-t border-gray-100 dark:border-[#2A2A2A] shadow-xl overflow-hidden"
             >
               <div className="container py-4 space-y-1">
                 {NAV_LINKS.map((link) => (
@@ -314,21 +317,89 @@ export function Header() {
                     className={cn(
                       'flex items-center px-4 py-3 rounded-xl text-sm font-semibold transition-colors',
                       pathname === link.href
-                        ? 'bg-orange-50 text-[#FF6B00]'
-                        : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-orange-50 dark:bg-brand-orange/15 text-[#FF6B00]'
+                        : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-[#2A2A2A]'
                     )}
                   >
                     {link.label}
                   </Link>
                 ))}
-                {!user && (
+                
+                {/* Mobile Favorites Link */}
+                <Link
+                  href="/favorites"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-[#2A2A2A] transition-colors"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <Heart className="w-4 h-4 text-red-500 fill-red-500" />
+                    Favorites
+                  </span>
+                  {favoriteCount > 0 && (
+                    <span className="px-2 py-0.5 text-xs rounded-full bg-red-500 text-white font-bold">
+                      {favoriteCount}
+                    </span>
+                  )}
+                </Link>
+
+                {/* Mobile Theme Toggle */}
+                <button
+                  onClick={toggleTheme}
+                  className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-[#2A2A2A] transition-colors"
+                >
+                  <span className="flex items-center gap-2.5">
+                    {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-gray-600" />}
+                    Theme
+                  </span>
+                  <span className="text-xs uppercase font-bold text-gray-400">
+                    {theme === 'dark' ? 'Dark' : 'Light'}
+                  </span>
+                </button>
+
+                {!user ? (
                   <Link
                     href="/auth/login"
                     onClick={() => setMobileOpen(false)}
-                    className="flex items-center px-4 py-3 rounded-xl text-sm font-semibold text-[#FF6B00] hover:bg-orange-50 transition-colors"
+                    className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold bg-[#FF6B00] text-white hover:bg-[#E56000] shadow-orange transition-colors mt-2"
                   >
+                    <User className="w-4 h-4" />
                     Sign In / Sign Up
                   </Link>
+                ) : (
+                  <div className="pt-2 border-t border-gray-100 dark:border-[#2A2A2A] mt-2">
+                    <Link
+                      href="/profile"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-[#2A2A2A]"
+                    >
+                      <User className="w-4 h-4 text-[#FF6B00]" />
+                      My Profile
+                    </Link>
+                    <Link
+                      href="/orders"
+                      onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-[#2A2A2A]"
+                    >
+                      <ShoppingCart className="w-4 h-4 text-[#FF6B00]" />
+                      My Orders
+                    </Link>
+                    {isAdmin && (
+                      <a
+                        href="/admin"
+                        className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-semibold text-[#FF6B00] hover:bg-orange-50 dark:hover:bg-[#2A2A2A]"
+                      >
+                        <LayoutDashboard className="w-4 h-4" />
+                        Admin Panel
+                      </a>
+                    )}
+                    <button
+                      onClick={() => { signOut(); setMobileOpen(false); }}
+                      className="w-full flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sign Out
+                    </button>
+                  </div>
                 )}
               </div>
             </motion.div>
